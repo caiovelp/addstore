@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
     final ButtonStyle style = ElevatedButton.styleFrom(
       textStyle: TextStyle(fontSize: 25),
       elevation: 5,
-      minimumSize: Size(100, 30)
     );
 
     final ButtonStyle styleText = ElevatedButton.styleFrom(
@@ -27,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(title: Text("Login"),),
+      resizeToAvoidBottomInset: false,
       body: Container(
         child: Center(
           child: Column(
@@ -71,7 +71,9 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextButton(
-                      onPressed: () => {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/cadastro');
+                      },
                       style: styleText,
                       child: Text("Registrar")
                   ),

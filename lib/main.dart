@@ -1,9 +1,11 @@
 import 'package:addstore/pages/loginpage.dart';
+import 'package:addstore/pages/cadastroPage.dart';
 import 'package:flutter/material.dart';
 
 final routes = {
   '/': (BuildContext context) => LoginPage(),
-  '/login': (BuildContext context) => LoginPage()
+  '/login': (BuildContext context) => LoginPage(),
+  '/cadastro': (BuildContext context) => CadastroPage()
 };
 
 void main() {
