@@ -1,4 +1,4 @@
-import 'package:addstore/pages/loginpage.dart';
+import 'package:addstore/pages/loginPage.dart';
 import 'package:addstore/pages/cadastroPage.dart';
 import 'package:flutter/material.dart';
 
