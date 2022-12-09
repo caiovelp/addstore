@@ -24,6 +24,18 @@ class DataBaseHelper {
               name VARCHAR NOT NULL,
               email VARCHAR NOT NULL, 
               password VARCHAR NOT NULL
+            );
+            CREATE TABLE advertisement(
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              state VARCHAR NOT NULL,
+              category VARCHAR(2) NOT NULL,
+              title TEXT NOT NULL,
+              price REAL NOT NULL,
+              telephone VARCHAR(20) NOT NULL,
+              description TEXT NOT NULL,
+              photo BLOB,
+              user_id INTEGER,
+              FOREIGN KEY(user_id) REFERENCES User(id)
             );""";
           await db.execute(sql);
 
