@@ -1,6 +1,9 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, empty_catches, prefer_final_fields
 
+import 'package:addstore/controller/loginController.dart';
 import 'package:flutter/material.dart';
+
+enum LoginStatus { notSignIn, signIn }
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -10,8 +13,37 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LoginStatus _loginStatus = LoginStatus.notSignIn;
   final _formKey = GlobalKey<FormState>();
-  String? _username, _password;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  var _dbUserController = LoginController();
+
+  void _submitLogin() async {
+    final form = _formKey.currentState;
+
+    if (form!.validate()) {
+      form.save();
+
+      try {
+        var username = nameController.text;
+        var password = passwordController.text;
+        int foundUser = await _dbUserController.getLogin(username, password);
+        if (foundUser != 1) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Usuário não cadastrado!'))
+          );
+        }
+        else{
+          _loginStatus = LoginStatus.signIn;
+        }
+      }
+      catch (exception) {
+
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +72,9 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: TextFormField(
-                        onSaved: (newValue) => _username = newValue,
+                        controller: nameController,
+                        keyboardType: TextInputType.name,
+                        onSaved: (newValue) => nameController.text = newValue!,
                         decoration: InputDecoration(
                           labelText: "Username",
                           border: OutlineInputBorder(),
@@ -50,7 +84,9 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: TextFormField(
-                        onSaved: (newValue) => _password = newValue,
+                        controller: passwordController,
+                        keyboardType: TextInputType.visiblePassword,
+                        onSaved: (newValue) => passwordController.text = newValue!,
                         decoration: InputDecoration(
                           labelText: "Password",
                           border: OutlineInputBorder()
@@ -58,7 +94,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     ElevatedButton.icon(
-                        onPressed: () => {},
+                        onPressed: () {
+                          _submitLogin();
+                        },
                         style: style,
                         icon: Icon(Icons.login_rounded),
                         label: Text("Entrar")
