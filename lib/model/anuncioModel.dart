@@ -1,4 +1,4 @@
-import 'dart:html';
+// import 'dart:html';
 
 import 'package:addstore/model/userDataModel.dart';
 
@@ -10,19 +10,19 @@ class Anuncio {
   final double price;
   final String telephone;
   final String description;
-  final Blob photo;
+  // final Blob photo;
   final User user;
 
-  Anuncio(
-    this.description,
-    this.photo,{
-    required this.id,
-    required this.state,
-    required this.category,
-    required this.title,
-    required this.price,
-    required this.telephone,
-    required this.user,
+  Anuncio({
+      required this.id,
+      required this.state,
+      required this.category,
+      required this.title,
+      required this.price,
+      required this.telephone,
+      required this.description,
+      // required this.photo,
+      required this.user,
   });
 
   Map<String, dynamic> toMap() {
@@ -33,11 +33,22 @@ class Anuncio {
       'title': title,
       'telephone': telephone,
       'description': description,
-      'photo': photo,
+      // 'photo': photo,
       'user': user,
     };
   }
-  fromMap(Map<String,dynamic> maps) {
-    this.id = maps.
+
+  factory Anuncio.fromMap(Map<String,dynamic> maps) {
+    return Anuncio(
+        description: maps['description'],
+        // photo: maps['photo'],
+        id: maps['id'],
+        state: maps['state'],
+        category: maps['category'],
+        title: maps['title'],
+        price: maps['price'],
+        telephone: maps['telephone'],
+        user: maps['user'],
+    );
   }
 }

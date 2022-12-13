@@ -1,4 +1,5 @@
 import 'package:addstore/controller/anuncioController.dart';
+import 'package:addstore/helper/AnuncioDetalheHelper.dart';
 import 'package:addstore/model/anuncioModel.dart';
 import 'package:flutter/material.dart';
 
@@ -17,13 +18,11 @@ class _AnuncioPageState extends State<AnuncioPage> {
     double width = MediaQuery.of(context).size.width;
     final ScrollController _firstController = ScrollController();
 
-    return Scaffold(
-      appBar: AppBar(title: Text(''),),
-      body: Container(
+    return Container(
         width: width,
         height: height,
         child: FutureBuilder<List<Anuncio>>(
-          future: AnuncioController().getEstadosByData(dataBruta!),
+          future: AnuncioController().getAnuncios(),
           builder: (context,snapshot) {
             if (snapshot.hasData) {
               return Scrollbar(
@@ -36,22 +35,22 @@ class _AnuncioPageState extends State<AnuncioPage> {
                         controller: _firstController,
                         padding: EdgeInsets.symmetric(
                             horizontal: width * 0.02, vertical: height * 0.02),
-                        itemCount: snapshot.data!.estados.length,
+                        itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
                           return Card(
                             child: ListTile(
                               trailing: Icon(Icons.play_arrow, size: height * 0.02),
-                              title: Text(snapshot.data!.estados[index].nome),
+                              title: Text(snapshot.data!.iterator.current.title),
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => PaisesStats(
-                                          snapshot.data!.estados[index].nome,
-                                          snapshot.data!.estados[index].casos,
-                                          snapshot.data!.estados[index].suspeitos,
-                                          snapshot.data!.estados[index].mortes,
-                                          snapshot.data!.estados[index].recusados,
+                                        builder: (context) => AnuncioDetalheHelper(
+                                          snapshot.data!.iterator.current.title,
+                                          snapshot.data!.iterator.current.price,
+                                          snapshot.data!.iterator.current.telephone,
+                                          snapshot.data!.iterator.current.description,
+                                          // snapshot.data!.iterator.current.photo,
                                         )
                                     )
                                 );
@@ -72,7 +71,6 @@ class _AnuncioPageState extends State<AnuncioPage> {
             }
           },
         ),
-      ),
-    );
+      );
   }
 }

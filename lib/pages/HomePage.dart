@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:addstore/pages/HomePage.dart';
+import 'package:addstore/pages/anuncioPage.dart';
 import 'package:flutter/material.dart';
 
 class ExtractHomePageScreen extends StatelessWidget {
@@ -27,6 +28,7 @@ class ExtractHomePageScreen extends StatelessWidget {
                 ))
           ],
         ),
+        body: AnuncioPage(),
       );
     }
     else {
@@ -42,6 +44,7 @@ class ExtractHomePageScreen extends StatelessWidget {
                 ))
           ],
         ),
+        body: AnuncioPage(),
       );
     }
   }
