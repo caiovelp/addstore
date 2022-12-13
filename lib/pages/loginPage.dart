@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, empty_catches, prefer_final_fields
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, empty_catches, prefer_final_fields, use_build_context_synchronously
 
 import 'package:addstore/controller/loginController.dart';
+import 'package:addstore/pages/HomePage.dart';
 import 'package:flutter/material.dart';
 
 enum LoginStatus { notSignIn, signIn }
@@ -37,6 +38,10 @@ class _LoginPageState extends State<LoginPage> {
         }
         else{
           _loginStatus = LoginStatus.signIn;
+          Navigator.pushNamed(
+              context,
+              ExtractHomePageScreen.routeName,
+              arguments: HomePageArguments(_loginStatus.toString()));
         }
       }
       catch (exception) {
@@ -116,7 +121,13 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text("Registrar")
                   ),
                   TextButton(
-                      onPressed: () => {},
+                      onPressed: () {
+                        _loginStatus = LoginStatus.notSignIn;
+                        Navigator.pushNamed(
+                            context,
+                            ExtractHomePageScreen.routeName,
+                            arguments: HomePageArguments(_loginStatus.toString()));
+                      },
                       style: styleText,
                       child: Text("Ver anúncios"))
                 ],
