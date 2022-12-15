@@ -3,11 +3,18 @@ import 'dart:core';
 import 'package:addstore/helper/dataBaseHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-
+import 'package:addstore/model/userDataModel.dart';
 import '../model/anuncioModel.dart';
 
 class AnuncioController {
   static const TABLE_NAME = 'advertisement';
+  static const ID = 'id = ?';
+  static const STATE = 'state = ?';
+  static const CATEGORY = 'category = ?';
+  static const TITLE = 'title = ?';
+  static const PRICE = 'price = ?';
+  static const TELEPHONE = 'telephone = ?';
+  static const DESCRIPTION = 'description = ?';
 
   Future create(Anuncio anuncio) async {
     try {
@@ -33,6 +40,27 @@ class AnuncioController {
           return Anuncio.fromMap(maps[i]);
         },
       );
+    } catch (ex) {
+      print(ex);
+      return <Anuncio>[];
+    }
+  }
+
+  Future<List<Anuncio>> getMeuAnuncios(User user) async {
+    try {
+    final Database db = await DataBaseHelper().initDb();
+    final List<Map<String, dynamic>> maps = await db.query(
+      TABLE_NAME,
+      where: "user_id = ?",
+      whereArgs: [user.id],
+    );
+
+    return List.generate(
+      maps.length,
+          (i) {
+        return Anuncio.fromMap(maps[i]);
+      },
+    );
     } catch (ex) {
       print(ex);
       return <Anuncio>[];
