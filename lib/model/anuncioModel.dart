@@ -3,18 +3,17 @@
 import 'package:addstore/model/userDataModel.dart';
 
 class Anuncio {
-  final int id;
-  final String state;
-  final String category;
-  final String title;
-  final double price;
-  final String telephone;
-  final String description;
+  int? id;
+  late String state;
+  late String category;
+  late String title;
+  late double price;
+  late String telephone;
+  late String description;
   // final Blob photo;
-  final User user;
+  //late User user;
 
   Anuncio({
-      required this.id,
       required this.state,
       required this.category,
       required this.title,
@@ -22,33 +21,37 @@ class Anuncio {
       required this.telephone,
       required this.description,
       // required this.photo,
-      required this.user,
+      //required this.user,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'state': state,
-      'category': category,
-      'title': title,
-      'telephone': telephone,
-      'description': description,
-      // 'photo': photo,
-      'user': user,
-    };
+  Anuncio.fromMap(Map map) {
+    this.id = map["id"];
+    this.state = map["state"];
+    this.category = map["category"];
+    this.title = map["title"];
+    this.price = map["price"];
+    this.telephone = map["telephone"];
+    this.description = map["description"];
+    //this.photo = map["photo"];
+    //this.user = map["user"];
+
   }
 
-  factory Anuncio.fromMap(Map<String,dynamic> maps) {
-    return Anuncio(
-        description: maps['description'],
-        // photo: maps['photo'],
-        id: maps['id'],
-        state: maps['state'],
-        category: maps['category'],
-        title: maps['title'],
-        price: maps['price'],
-        telephone: maps['telephone'],
-        user: maps['user'],
-    );
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = {
+      "state": this.state,
+      "category": this.category,
+      "title": this.title,
+      "category": this.category,
+      "price": this.price,
+      "telephone": this.telephone,
+      "description": this.description,
+      //"photo": this.photo,
+      //"user": this.user
+    };
+
+    map["id"] ??= this.id;
+
+    return map;
   }
 }

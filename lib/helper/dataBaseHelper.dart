@@ -10,6 +10,7 @@ class DataBaseHelper {
               email VARCHAR NOT NULL, 
               password VARCHAR NOT NULL
             );""";
+
   static const _CREATE_ANUNCIO_TABLE_SCRIPT = """
             CREATE TABLE anuncio( 
               id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -19,30 +20,35 @@ class DataBaseHelper {
               price REAL NOT NULL,
               telephone VARCHAR(20) NOT NULL,
               description TEXT NOT NULL,
-              photo BLOB,
-              user_id INTEGER,
-              FOREIGN_KEY(user_id) REFERENCES user(id) 
+              user_id INTEGER
             );""";
   factory DataBaseHelper() => _instance;
 
   DataBaseHelper.internal();
 
   Future<Database> initDb() async {
+    print("initDB executed");
     final databasePath = await getDatabasesPath();
 
-    final path = join(databasePath, "users_database.db");
+    final path = join(databasePath, "mydatabase.db");
 
     Database db = await openDatabase(
         path,
         version: 1,
         onCreate: (db, version) async {
 
-          String sql = _CREATE_USER_TABLE_SCRIPT + _CREATE_ANUNCIO_TABLE_SCRIPT;
-          await db.execute(sql);
+          String sqlUser = _CREATE_USER_TABLE_SCRIPT;
+          String sqlAnuncio = _CREATE_ANUNCIO_TABLE_SCRIPT;
+          db.execute(sqlUser);
+          db.execute(sqlAnuncio);
 
         }
     );
 
     return db;
   }
+
+  Future<void> deleteDatabase(String path) =>
+      databaseFactory.deleteDatabase(path);
+
 }

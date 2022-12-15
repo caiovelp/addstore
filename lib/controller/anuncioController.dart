@@ -7,31 +7,39 @@ import 'package:addstore/model/userDataModel.dart';
 import '../model/anuncioModel.dart';
 
 class AnuncioController {
-  static const TABLE_NAME = 'advertisement';
-  static const ID = 'id = ?';
+  var database = DataBaseHelper().initDb();
+
+  static const TABLE_NAME = 'anuncio';
+  /*static const ID = 'id = ?';
   static const STATE = 'state = ?';
   static const CATEGORY = 'category = ?';
   static const TITLE = 'title = ?';
   static const PRICE = 'price = ?';
   static const TELEPHONE = 'telephone = ?';
-  static const DESCRIPTION = 'description = ?';
+  static const DESCRIPTION = 'description = ?';*/
 
-  Future create(Anuncio anuncio) async {
+
+  Future<int> insertAnuncio(Anuncio anuncio) async {
     try {
-      final Database db = await DataBaseHelper().initDb();
+      final db = await database;
 
-      await db.insert(
-        TABLE_NAME,
-        anuncio.toMap(),
+      int result = await db.insert(
+          TABLE_NAME,
+          anuncio.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace
       );
+
+      print("TOMALHE");
+
+      return result;
     } catch (ex) {
       print(ex);
-      return;
+      return 0;
     }
   }
   Future<List<Anuncio>> getAnuncios() async {
     try {
-      final Database db = await DataBaseHelper().initDb();
+      final db = await database;
       final List<Map<String, dynamic>> maps = await db.query(TABLE_NAME);
 
       return List.generate(

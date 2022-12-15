@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, empty_catches, prefer_final_fields, use_build_context_synchronously
 
 import 'package:addstore/controller/loginController.dart';
+import 'package:addstore/helper/dataBaseHelper.dart';
 import 'package:addstore/pages/HomePage.dart';
 import 'package:flutter/material.dart';
 
@@ -45,6 +46,7 @@ class _LoginPageState extends State<LoginPage> {
               ExtractHomePageScreen.routeName,
               arguments: HomePageArguments(
                   _loginStatus.toString(),
+                  null
                   ));
         }
       }
@@ -124,10 +126,17 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pushNamed(context, '/cadastro');
                       },
                       style: styleText,
-                      child: Text("Registrar")
+                      child: Text("Cadastrar")
                   ),
                   TextButton(
                       onPressed: () {
+                        DataBaseHelper().deleteDatabase("mydatabase.db");
+                      },
+                      style: styleText,
+                      child: Text("DELETE DATABASE")
+                  ),
+                  TextButton(
+                    onPressed: () {
                         nameController.clear();
                         passwordController.clear();
                         _loginStatus = LoginStatus.notSignIn;
@@ -136,6 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                             ExtractHomePageScreen.routeName,
                             arguments: HomePageArguments(
                                 _loginStatus.toString(),
+                                null
                                 ));
                       },
                       style: styleText,
