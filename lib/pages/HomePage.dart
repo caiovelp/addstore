@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:addstore/pages/HomePage.dart';
-import 'package:addstore/pages/anuncioPage.dart';
+import 'package:addstore/pages/menuPage.dart';
 import 'package:flutter/material.dart';
 
 class ExtractHomePageScreen extends StatelessWidget {
@@ -20,7 +19,12 @@ class ExtractHomePageScreen extends StatelessWidget {
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/menu');
+                  Navigator.pushNamed(
+                      context,
+                      ExtractMenuPageScreen.routeName,
+                      arguments: MenuPageArguments(
+                          args._loginStatus.toString(),
+                          ));
                 },
                 icon: Icon(
                   Icons.menu_rounded,
@@ -28,7 +32,6 @@ class ExtractHomePageScreen extends StatelessWidget {
                 ))
           ],
         ),
-        body: AnuncioPage(),
       );
     }
     else {
@@ -37,14 +40,20 @@ class ExtractHomePageScreen extends StatelessWidget {
           title: Text("Não Logado"),
           actions: <Widget>[
             IconButton(
-                onPressed: () => {},
+                onPressed: () {
+                  Navigator.pushNamed(
+                      context,
+                      ExtractMenuPageScreen.routeName,
+                      arguments: MenuPageArguments(
+                          args._loginStatus.toString(),
+                          ));
+                },
                 icon: Icon(
                   Icons.menu_rounded,
                   size: 35,
                 ))
           ],
         ),
-        body: AnuncioPage(),
       );
     }
   }

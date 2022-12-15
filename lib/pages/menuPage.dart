@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 
+class ExtractMenuPageScreen extends StatelessWidget {
+  const ExtractMenuPageScreen({Key? key}) : super(key: key);
 
+  static const routeName = '/menu';
 
-class MenuLogged extends StatefulWidget {
-  const MenuLogged({Key? key}) : super(key: key);
-
-  @override
-  State<MenuLogged> createState() => _MenuLoggedState();
-}
-
-class _MenuLoggedState extends State<MenuLogged> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Menu"),),
-      body: MenuBodyLogged(),
-    );
+    final args = ModalRoute.of(context)!.settings.arguments as MenuPageArguments;
+
+    if(args._loginStatus.toString() == "LoginStatus.signIn") {
+      return Scaffold(
+        appBar: AppBar(title: Text("Menu"),),
+        body: MenuBodyLogged(),
+      );
+    }
+    else {
+      return Scaffold(
+        appBar: AppBar(title: Text("Menu"),),
+        body: MenuBodyUnLogged(),
+      );
+    }
   }
 }
-
 
 class MenuBodyLogged extends StatelessWidget {
   MenuBodyLogged({Key? key}) : super(key: key);
@@ -44,7 +48,8 @@ class MenuBodyLogged extends StatelessWidget {
           ),
           ElevatedButton.icon(
               onPressed: () {
-
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
               style: style,
               icon: Icon(Icons.logout_rounded),
@@ -54,4 +59,49 @@ class MenuBodyLogged extends StatelessWidget {
       ),
     );
   }
+}
+
+class MenuBodyUnLogged extends StatelessWidget {
+  MenuBodyUnLogged({Key? key}) : super(key: key);
+
+  @override
+  final ButtonStyle style = ElevatedButton.styleFrom(
+    textStyle: TextStyle(fontSize: 40),
+    elevation: 5,
+  );
+
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              style: style,
+              icon: Icon(Icons.receipt_long_rounded),
+              label: Text("Logar")
+          ),
+          ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/cadastro');
+              },
+              style: style,
+              icon: Icon(Icons.logout_rounded),
+              label: Text("Cadastrar")
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class MenuPageArguments {
+  final String _loginStatus;
+
+  MenuPageArguments(this._loginStatus);
 }

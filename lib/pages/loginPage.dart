@@ -37,11 +37,15 @@ class _LoginPageState extends State<LoginPage> {
           );
         }
         else{
+          nameController.clear();
+          passwordController.clear();
           _loginStatus = LoginStatus.signIn;
           Navigator.pushNamed(
               context,
               ExtractHomePageScreen.routeName,
-              arguments: HomePageArguments(_loginStatus.toString()));
+              arguments: HomePageArguments(
+                  _loginStatus.toString(),
+                  ));
         }
       }
       catch (exception) {
@@ -115,6 +119,8 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   TextButton(
                       onPressed: () {
+                        nameController.clear();
+                        passwordController.clear();
                         Navigator.pushNamed(context, '/cadastro');
                       },
                       style: styleText,
@@ -122,11 +128,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                       onPressed: () {
+                        nameController.clear();
+                        passwordController.clear();
                         _loginStatus = LoginStatus.notSignIn;
                         Navigator.pushNamed(
                             context,
                             ExtractHomePageScreen.routeName,
-                            arguments: HomePageArguments(_loginStatus.toString()));
+                            arguments: HomePageArguments(
+                                _loginStatus.toString(),
+                                ));
                       },
                       style: styleText,
                       child: Text("Ver anúncios"))

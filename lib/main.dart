@@ -8,7 +8,7 @@ final routes = {
   '/': (BuildContext context) => LoginPage(),
   '/login': (BuildContext context) => LoginPage(),
   '/cadastro': (BuildContext context) => CadastroPage(),
-  '/menu': (BuildContext context) => MenuLogged(),
+  ExtractMenuPageScreen.routeName: (BuildContext context) => ExtractMenuPageScreen(),
   ExtractHomePageScreen.routeName: (BuildContext context) => ExtractHomePageScreen()
 };
 
