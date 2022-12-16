@@ -10,13 +10,13 @@ class AnuncioController {
   var database = DataBaseHelper().initDb();
 
   static const TABLE_NAME = 'anuncio';
-  /*static const ID = 'id = ?';
+  static const ID = 'id = ?';
   static const STATE = 'state = ?';
   static const CATEGORY = 'category = ?';
   static const TITLE = 'title = ?';
   static const PRICE = 'price = ?';
   static const TELEPHONE = 'telephone = ?';
-  static const DESCRIPTION = 'description = ?';*/
+  static const DESCRIPTION = 'description = ?';
 
 
   Future<int> insertAnuncio(Anuncio anuncio) async {
@@ -76,10 +76,11 @@ class AnuncioController {
   }
 
   Future update(Anuncio anuncio) async {
+
     try {
       final Database db =  await DataBaseHelper().initDb();
 
-      await db.update(TABLE_NAME, anuncio.toMap(), where: 'id = ?', whereArgs: [anuncio.id]);
+      await db.update(TABLE_NAME, anuncio.toMap(), where: ID, whereArgs: [anuncio.id]);
 
     } catch (ex) {
       print(ex);

@@ -7,6 +7,7 @@ import 'package:addstore/pages/menuPage.dart';
 import 'package:flutter/material.dart';
 
 class ExtractHomePageScreen extends StatelessWidget {
+
   ExtractHomePageScreen({Key? key}) : super(key: key);
 
   static const routeName = '/extractArguments';

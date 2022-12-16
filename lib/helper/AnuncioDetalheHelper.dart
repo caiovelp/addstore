@@ -1,22 +1,16 @@
 // import 'dart:html';
 
+import 'package:addstore/model/anuncioModel.dart';
 import 'package:addstore/model/userDataModel.dart';
 import 'package:flutter/material.dart';
 
 
 class AnuncioDetalheHelper extends StatelessWidget{
-  final String title;
-  final double price;
-  final String telephone;
-  final String description;
+  final Anuncio anuncio;
   // final Blob photo;
 
   const AnuncioDetalheHelper(
-    this.title,
-    this.price,
-    this.telephone,
-    this.description,
-    // this.photo,
+    this.anuncio
   );
 
   @override
@@ -25,7 +19,7 @@ class AnuncioDetalheHelper extends StatelessWidget{
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(title: Text(this.title),),
+      appBar: AppBar(title: Text(anuncio.title),),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -33,25 +27,25 @@ class AnuncioDetalheHelper extends StatelessWidget{
           Row(
             children: [
               Text('Produto: '),
-              Text(title)
+              Text(anuncio.title)
             ],
           ),
           Row(
             children: [
               Text('Preco: '),
-              Text(price.toString())
+              Text(anuncio.price.toString())
             ],
           ),
           Row(
             children: [
               Text('Descrição do produto: '),
-              Text(description)
+              Text(anuncio.description)
             ],
           ),
           Row(
             children: [
               Text('Telefone: '),
-              Text(telephone)
+              Text(anuncio.telephone)
             ],
           ),
         ],

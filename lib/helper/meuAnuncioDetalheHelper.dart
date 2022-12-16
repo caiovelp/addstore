@@ -1,18 +1,13 @@
-// import 'dart:html';
 
 import 'package:addstore/controller/anuncioController.dart';
 import 'package:addstore/model/anuncioModel.dart';
 import 'package:addstore/model/userDataModel.dart';
+import 'package:addstore/pages/editPage.dart';
 import 'package:flutter/material.dart';
 
 
 class MeuAnuncioDetalheHelper extends StatelessWidget{
   final Anuncio anuncio;
-  final int id;
-  final String title;
-  final double price;
-  final String telephone;
-  final String description;
   // final Blob photo;
 
   const MeuAnuncioDetalheHelper(this.anuncio)
@@ -58,8 +53,8 @@ class MeuAnuncioDetalheHelper extends StatelessWidget{
                 AnuncioController().delete(anuncio);
               }, child: Text('Deletar')),
               ElevatedButton(onPressed: () {
-
-              }, child: Text('Deletar'),)
+                (context) => EditPage(anuncio);
+              }, child: Text('Editar'),)
             ],
           )
         ],
