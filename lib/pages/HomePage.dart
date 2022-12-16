@@ -60,8 +60,8 @@ class ExtractHomePageScreen extends StatelessWidget {
                           args.userID,
                           args.state,
                           args.category,
-                          args.price!,
-                          args.title!
+                          args.price,
+                          args.title
                           ));
                 },
                 icon: Icon(

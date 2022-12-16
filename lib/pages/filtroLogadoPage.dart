@@ -71,7 +71,7 @@ class FiltroLogadoPage extends StatelessWidget {
                           keyboardType: TextInputType.visiblePassword,
                           onSaved: (newValue) => priceController.text = newValue!,
                           decoration: InputDecoration(
-                              labelText: "Filtrar pelo preço do produto",
+                              labelText: "Filtrar pelo preço do produto (Menor ou igual)",
                               border: OutlineInputBorder()
                           ),
                         ),

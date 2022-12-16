@@ -31,8 +31,6 @@ class AnuncioController {
           conflictAlgorithm: ConflictAlgorithm.replace
       );
 
-      print("TOMALHE");
-
       return result;
     } catch (ex) {
       print(ex);
