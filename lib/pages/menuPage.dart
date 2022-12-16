@@ -1,3 +1,5 @@
+import 'package:addstore/pages/menuPage.dart';
+import 'package:addstore/pages/myAnuncios.dart';
 import 'package:flutter/material.dart';
 
 class ExtractMenuPageScreen extends StatelessWidget {
@@ -34,13 +36,20 @@ class MenuBodyLogged extends StatelessWidget {
   );
 
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as MenuPageArguments;
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ElevatedButton.icon(
               onPressed: () {
-
+                Navigator.pushNamed(
+                    context,
+                    ExtractMyAnunciosPageScreen.routeName,
+                    arguments: MyAnunciosPageArguments(
+                        args._loginStatus,
+                        args.userID));
               },
               style: style,
               icon: Icon(Icons.receipt_long_rounded),
@@ -102,6 +111,7 @@ class MenuBodyUnLogged extends StatelessWidget {
 
 class MenuPageArguments {
   final String _loginStatus;
+  final int? userID;
 
-  MenuPageArguments(this._loginStatus);
+  MenuPageArguments(this._loginStatus, this.userID);
 }

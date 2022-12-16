@@ -29,4 +29,5 @@ class RegistroController {
     else
       return 0;
   }
+
 }

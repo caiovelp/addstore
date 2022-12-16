@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:addstore/controller/anuncioController.dart';
+import 'package:addstore/helper/AnuncioDetalheHelper.dart';
 import 'package:addstore/model/anuncioModel.dart';
-import 'package:addstore/model/userDataModel.dart';
 import 'package:addstore/pages/menuPage.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +28,7 @@ class ExtractHomePageScreen extends StatelessWidget {
                       ExtractMenuPageScreen.routeName,
                       arguments: MenuPageArguments(
                           args._loginStatus.toString(),
+                          args.userID
                           ));
                 },
                 icon: Icon(
@@ -51,6 +52,7 @@ class ExtractHomePageScreen extends StatelessWidget {
                       ExtractMenuPageScreen.routeName,
                       arguments: MenuPageArguments(
                           args._loginStatus.toString(),
+                          args.userID
                           ));
                 },
                 icon: Icon(
@@ -70,15 +72,6 @@ class HomePageBody extends StatelessWidget {
 
   var _dbAnuncioController = AnuncioController();
 
-  List<Anuncio> anuncios = [];
-
-  Anuncio anuncio = Anuncio(
-      state: "RJ",
-      category: "Objeto",
-      title: "Caneta azul",
-      price: 0.99,
-      telephone: "(21) 999999999999",
-      description: "Azul caneta");
 
   @override
   Widget build(BuildContext context) {
@@ -86,17 +79,21 @@ class HomePageBody extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+    final TextStyle titleStyle = TextStyle(
+      fontSize: width * 0.07,
+      fontWeight: FontWeight.bold,
+    );
+
+    final TextStyle subTitleStyle = TextStyle(
+      fontSize: width * 0.04,
+      fontStyle: FontStyle.italic,
+    );
+
     return Column(
       children: [
-        TextButton(
-            onPressed: () {
-              _dbAnuncioController.insertAnuncio(anuncio);
-            },
-            child: Text("Inserir anúncio"),
-        ),
         Expanded(
           child: FutureBuilder<List<Anuncio>>(
-            future: AnuncioController().getAnuncios(),
+            future: _dbAnuncioController.getAnuncios(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Scrollbar(
@@ -115,7 +112,20 @@ class HomePageBody extends StatelessWidget {
                                   return Card(
                                     child: ListTile(
                                       trailing: Icon(Icons.play_arrow, size: height * 0.02),
-                                      title: Text(item.title),
+                                      title: Text(item.title, style: titleStyle),
+                                      subtitle: Text("R\$ ${item.price} - Estado: ${item.state} - Categoria ${item.category}", style: subTitleStyle,),
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => AnuncioDetalheHelper(
+                                                    item.title,
+                                                    item.price,
+                                                    item.telephone,
+                                                    item.description)
+                                            )
+                                        );
+                                      },
                                     ),
                                   );
                                 }
@@ -139,7 +149,7 @@ class HomePageBody extends StatelessWidget {
 
 class HomePageArguments {
   final String _loginStatus;
-  final User? user;
+  final int? userID;
 
-  HomePageArguments(this._loginStatus, this.user);
+  HomePageArguments(this._loginStatus, this.userID);
 }

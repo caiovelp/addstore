@@ -54,13 +54,30 @@ class AnuncioController {
     }
   }
 
-  Future<List<Anuncio>> getMeuAnuncios(User user) async {
+  Future<List<Anuncio>> retrieveAnuncio(int id) async {
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      TABLE_NAME,
+      where: "id = ?",
+      whereArgs: [id],
+    );
+
+    return List.generate(
+      maps.length,
+          (i) {
+        return Anuncio.fromMap(maps[i]);
+      },
+    );
+  }
+
+  Future<List<Anuncio>> getAnunciosByID(int userId) async {
     try {
-    final Database db = await DataBaseHelper().initDb();
+    final db = await database;
     final List<Map<String, dynamic>> maps = await db.query(
       TABLE_NAME,
       where: "user_id = ?",
-      whereArgs: [user.id],
+      whereArgs: [userId],
     );
 
     return List.generate(
@@ -88,10 +105,10 @@ class AnuncioController {
     }
   }
 
-  Future delete(Anuncio anuncio) async {
+  Future delete(int anuncioID) async {
     try {
       final Database db = await DataBaseHelper().initDb();
-      await db.delete(TABLE_NAME, where: 'id = ?', whereArgs: [anuncio.id]);
+      await db.delete(TABLE_NAME, where: 'id = ?', whereArgs: [anuncioID]);
     }
     catch(ex) {
       print(ex);

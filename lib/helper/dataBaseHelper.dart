@@ -30,7 +30,7 @@ class DataBaseHelper {
     print("initDB executed");
     final databasePath = await getDatabasesPath();
 
-    final path = join(databasePath, "mydatabase.db");
+    final path = join(databasePath, "controlDB.db");
 
     Database db = await openDatabase(
         path,

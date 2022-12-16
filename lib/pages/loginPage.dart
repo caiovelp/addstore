@@ -41,12 +41,16 @@ class _LoginPageState extends State<LoginPage> {
           nameController.clear();
           passwordController.clear();
           _loginStatus = LoginStatus.signIn;
+
+          var userInfo = await _dbUserController.retrieveUserID(username);
+          var id = userInfo.elementAt(0).id;
+
           Navigator.pushNamed(
               context,
               ExtractHomePageScreen.routeName,
               arguments: HomePageArguments(
                   _loginStatus.toString(),
-                  null
+                  id
                   ));
         }
       }

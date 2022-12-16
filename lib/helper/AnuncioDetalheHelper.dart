@@ -1,16 +1,23 @@
 // import 'dart:html';
 
-import 'package:addstore/model/anuncioModel.dart';
+import 'package:addstore/helper/anuntioTile.dart';
 import 'package:addstore/model/userDataModel.dart';
 import 'package:flutter/material.dart';
 
 
 class AnuncioDetalheHelper extends StatelessWidget{
-  final Anuncio anuncio;
+  final String title;
+  final double price;
+  final String telephone;
+  final String description;
   // final Blob photo;
 
   const AnuncioDetalheHelper(
-    this.anuncio
+    this.title,
+    this.price,
+    this.telephone,
+    this.description,
+    // this.photo,
   );
 
   @override
@@ -18,36 +25,27 @@ class AnuncioDetalheHelper extends StatelessWidget{
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+    final TextStyle titleStyle = TextStyle(
+      fontSize: width * 0.05,
+    );
+
     return Scaffold(
-      appBar: AppBar(title: Text(anuncio.title),),
+      appBar: AppBar(title: Text("Detalhes"),),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox( height: 20,),
+          SizedBox(height: 20),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text('Produto: '),
-              Text(anuncio.title)
+              AnuncioTile('Produto: $title', Colors.amber.shade800),
+              AnuncioTile('Valor: R\$ $price', Colors.green.shade800),
             ],
           ),
-          Row(
-            children: [
-              Text('Preco: '),
-              Text(anuncio.price.toString())
-            ],
-          ),
-          Row(
-            children: [
-              Text('Descrição do produto: '),
-              Text(anuncio.description)
-            ],
-          ),
-          Row(
-            children: [
-              Text('Telefone: '),
-              Text(anuncio.telephone)
-            ],
-          ),
+          SizedBox(height: 20),
+          Text("Telefone p/ contato: $telephone", style: titleStyle,),
+          SizedBox(height: 20),
+          Text("Descrição do item: $description", style: titleStyle,),
         ],
       ),
     );

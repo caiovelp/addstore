@@ -11,7 +11,7 @@ class Anuncio {
   late String telephone;
   late String description;
   // final Blob photo;
-  //late User user;
+  late int userID;
 
   Anuncio({
       required this.state,
@@ -21,7 +21,7 @@ class Anuncio {
       required this.telephone,
       required this.description,
       // required this.photo,
-      //required this.user,
+      required this.userID,
   });
 
   Anuncio.fromMap(Map map) {
@@ -33,7 +33,7 @@ class Anuncio {
     this.telephone = map["telephone"];
     this.description = map["description"];
     //this.photo = map["photo"];
-    //this.user = map["user"];
+    this.userID = map["user_id"];
 
   }
 
@@ -42,12 +42,11 @@ class Anuncio {
       "state": this.state,
       "category": this.category,
       "title": this.title,
-      "category": this.category,
       "price": this.price,
       "telephone": this.telephone,
       "description": this.description,
       //"photo": this.photo,
-      //"user": this.user
+      "user_id": this.userID
     };
 
     map["id"] ??= this.id;
