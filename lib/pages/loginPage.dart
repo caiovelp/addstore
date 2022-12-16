@@ -3,6 +3,8 @@
 import 'package:addstore/controller/loginController.dart';
 import 'package:addstore/helper/dataBaseHelper.dart';
 import 'package:addstore/pages/HomePage.dart';
+import 'package:addstore/pages/filtroLogadoPage.dart';
+import 'package:addstore/pages/filtroNaoLogadoPage.dart';
 import 'package:flutter/material.dart';
 
 enum LoginStatus { notSignIn, signIn }
@@ -47,11 +49,11 @@ class _LoginPageState extends State<LoginPage> {
 
           Navigator.pushNamed(
               context,
-              ExtractHomePageScreen.routeName,
-              arguments: HomePageArguments(
+              '/filtroLogged',
+              arguments: FiltroLogadoPageArguments(
                   _loginStatus.toString(),
                   id
-                  ));
+              ));
         }
       }
       catch (exception) {
@@ -146,8 +148,8 @@ class _LoginPageState extends State<LoginPage> {
                         _loginStatus = LoginStatus.notSignIn;
                         Navigator.pushNamed(
                             context,
-                            ExtractHomePageScreen.routeName,
-                            arguments: HomePageArguments(
+                            '/filtroUnlogged',
+                            arguments: FiltroNaoLogadoPageArguments(
                                 _loginStatus.toString(),
                                 null
                                 ));

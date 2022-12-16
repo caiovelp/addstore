@@ -1,4 +1,6 @@
 import 'package:addstore/pages/HomePage.dart';
+import 'package:addstore/pages/filtroLogadoPage.dart';
+import 'package:addstore/pages/filtroNaoLogadoPage.dart';
 import 'package:addstore/pages/insertAnuncio.dart';
 import 'package:addstore/pages/loginPage.dart';
 import 'package:addstore/pages/cadastroPage.dart';
@@ -16,6 +18,8 @@ final routes = {
   ExtractMyAnunciosPageScreen.routeName: (BuildContext context) => ExtractMyAnunciosPageScreen(),
   '/insertAnuncio': (BuildContext context) => InsertAnuncioPage(),
   '/updateAnuncio': (BuildContext context) => EditAnuncioPage(),
+  '/filtroUnlogged': (BuildContext context) => FiltroNaoLogadoPage(),
+  '/filtroLogged': (BuildContext context) => FiltroLogadoPage(),
 };
 
 void main() {

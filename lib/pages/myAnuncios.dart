@@ -73,7 +73,8 @@ class MyAnuncioPageBody extends StatelessWidget {
         ),
         Expanded(
             child: FutureBuilder<List<Anuncio>>(
-              future: _dbAnuncioController.getAnunciosByID(args._userId!),
+              future: _dbAnuncioController.getAnunciosByID(
+                  args._userId!),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Scrollbar(
@@ -154,7 +155,17 @@ class MyAnuncioPageBody extends StatelessWidget {
 
 class MyAnunciosPageArguments {
   final String _loginStatus;
+  final String state;
+  final String category;
+  final String title;
+  final String price;
   final int? _userId;
 
-  MyAnunciosPageArguments(this._loginStatus, this._userId);
+  MyAnunciosPageArguments(
+      this._loginStatus,
+      this._userId,
+      this.state,
+      this.category,
+      this.title,
+      this.price);
 }

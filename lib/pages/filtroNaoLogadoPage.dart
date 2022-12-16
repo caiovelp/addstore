@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:addstore/pages/HomePage.dart';
 import 'package:flutter/material.dart';
 
 class FiltroNaoLogadoPage extends StatelessWidget {
@@ -9,6 +12,8 @@ class FiltroNaoLogadoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as FiltroNaoLogadoPageArguments;
+
     return Scaffold(
       appBar: AppBar(title: Text("Filtro dos anúncios"),),
       resizeToAvoidBottomInset: false,
@@ -47,7 +52,17 @@ class FiltroNaoLogadoPage extends StatelessWidget {
                       ),
                       ElevatedButton.icon(
                           onPressed: () {
-                            // Navigator.pushNamed(context, )
+                            Navigator.pushNamed(
+                                context,
+                                ExtractHomePageScreen.routeName,
+                                arguments: HomePageArguments(
+                                    args._loginStatus.toString(),
+                                    null,
+                                    stateController.text,
+                                    categoryController.text,
+                                    null,
+                                    null
+                                ));
                           },
                           icon: Icon(Icons.login_rounded),
                           label: Text("Filtrar")
@@ -61,4 +76,11 @@ class FiltroNaoLogadoPage extends StatelessWidget {
       ),
     );
   }
+}
+
+class FiltroNaoLogadoPageArguments {
+  final String _loginStatus;
+  final int? _userId;
+
+  FiltroNaoLogadoPageArguments(this._loginStatus, this._userId);
 }

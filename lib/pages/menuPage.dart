@@ -49,7 +49,11 @@ class MenuBodyLogged extends StatelessWidget {
                     ExtractMyAnunciosPageScreen.routeName,
                     arguments: MyAnunciosPageArguments(
                         args._loginStatus,
-                        args.userID));
+                        args.userID,
+                        args.state,
+                        args.category,
+                        args.title!,
+                        args.price!));
               },
               style: style,
               icon: Icon(Icons.receipt_long_rounded),
@@ -88,6 +92,7 @@ class MenuBodyUnLogged extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 Navigator.pop(context);
+                Navigator.pop(context);
               },
               style: style,
               icon: Icon(Icons.receipt_long_rounded),
@@ -95,6 +100,7 @@ class MenuBodyUnLogged extends StatelessWidget {
           ),
           ElevatedButton.icon(
               onPressed: () {
+                Navigator.pop(context);
                 Navigator.pop(context);
                 Navigator.pop(context);
                 Navigator.pushNamed(context, '/cadastro');
@@ -111,7 +117,17 @@ class MenuBodyUnLogged extends StatelessWidget {
 
 class MenuPageArguments {
   final String _loginStatus;
+  final String state;
+  final String category;
+  final String? title;
+  final String? price;
   final int? userID;
 
-  MenuPageArguments(this._loginStatus, this.userID);
+  MenuPageArguments(
+      this._loginStatus,
+      this.userID,
+      this.state,
+      this.category,
+      this.price,
+      this.title);
 }

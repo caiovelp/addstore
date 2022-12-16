@@ -28,7 +28,11 @@ class ExtractHomePageScreen extends StatelessWidget {
                       ExtractMenuPageScreen.routeName,
                       arguments: MenuPageArguments(
                           args._loginStatus.toString(),
-                          args.userID
+                          args.userID,
+                          args.state,
+                          args.category,
+                          args.price!,
+                          args.title!
                           ));
                 },
                 icon: Icon(
@@ -37,6 +41,7 @@ class ExtractHomePageScreen extends StatelessWidget {
                 ))
           ],
         ),
+        body: HomePageBody2(),
 
       );
     }
@@ -52,7 +57,11 @@ class ExtractHomePageScreen extends StatelessWidget {
                       ExtractMenuPageScreen.routeName,
                       arguments: MenuPageArguments(
                           args._loginStatus.toString(),
-                          args.userID
+                          args.userID,
+                          args.state,
+                          args.category,
+                          args.price!,
+                          args.title!
                           ));
                 },
                 icon: Icon(
@@ -75,6 +84,8 @@ class HomePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as HomePageArguments;
+
     final ScrollController _firstController = ScrollController();
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -93,7 +104,7 @@ class HomePageBody extends StatelessWidget {
       children: [
         Expanded(
           child: FutureBuilder<List<Anuncio>>(
-            future: _dbAnuncioController.getAnuncios(),
+            future: _dbAnuncioController.getAnuncios(args.state, args.category),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Scrollbar(
@@ -146,10 +157,101 @@ class HomePageBody extends StatelessWidget {
   }
 }
 
+class HomePageBody2 extends StatelessWidget {
+  HomePageBody2({Key? key}) : super(key: key);
+
+  var _dbAnuncioController = AnuncioController();
+
+
+  @override
+  Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as HomePageArguments;
+
+    final ScrollController _firstController = ScrollController();
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    final TextStyle titleStyle = TextStyle(
+      fontSize: width * 0.07,
+      fontWeight: FontWeight.bold,
+    );
+
+    final TextStyle subTitleStyle = TextStyle(
+      fontSize: width * 0.04,
+      fontStyle: FontStyle.italic,
+    );
+
+    return Column(
+      children: [
+        Expanded(
+            child: FutureBuilder<List<Anuncio>>(
+              future: _dbAnuncioController.getAnuncios2(args.state, args.category, args.price!, args.title!),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Scrollbar(
+                      thumbVisibility: true,
+                      controller: _firstController,
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: ListView.builder(
+                                  controller: _firstController,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: width * 0.02, vertical: height * 0.02),
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    final item = snapshot.data![index];
+                                    return Card(
+                                      child: ListTile(
+                                        trailing: Icon(Icons.play_arrow, size: height * 0.02),
+                                        title: Text(item.title, style: titleStyle),
+                                        subtitle: Text("R\$ ${item.price} - Estado: ${item.state} - Categoria ${item.category}", style: subTitleStyle,),
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => AnuncioDetalheHelper(
+                                                      item.title,
+                                                      item.price,
+                                                      item.telephone,
+                                                      item.description)
+                                              )
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  }
+                              )
+                          )
+                        ],
+                      )
+                  );
+                }
+                else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            )
+        )
+      ],
+    );
+  }
+}
+
 
 class HomePageArguments {
   final String _loginStatus;
+  final String state;
+  final String category;
+  final String? title;
+  final String? price;
   final int? userID;
 
-  HomePageArguments(this._loginStatus, this.userID);
+  HomePageArguments(
+      this._loginStatus,
+      this.userID,
+      this.state,
+      this.category,
+      this.price,
+      this.title);
 }
