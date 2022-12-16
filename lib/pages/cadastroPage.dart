@@ -39,6 +39,11 @@ class _CadastroPageState extends State<CadastroPage> {
           const SnackBar(content: Text('Email já cadastrado!'))
       );
     }
+    else if(found == 3) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Email inválido, digite um e-mail com '@'"))
+      );
+    }
     else
     {
       await _dbUserController.insertUser(user);

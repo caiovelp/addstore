@@ -22,12 +22,15 @@ class RegistroController {
 
     var username = await db.query('user', where: 'name=?', whereArgs: [user.name]);
     var email = await db.query('user', where: 'email=?', whereArgs: [user.email]);
-    if (username.isNotEmpty)
+    if (username.isNotEmpty) {
       return 1;
-    else if (email.isNotEmpty)
+    } else if (email.isNotEmpty) {
       return 2;
-    else
+    } else if (!email.contains('@')) {
+      return 3;
+    } else {
       return 0;
+    }
   }
 
 }
