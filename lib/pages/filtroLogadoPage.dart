@@ -35,7 +35,7 @@ class FiltroLogadoPage extends StatelessWidget {
                           keyboardType: TextInputType.name,
                           onSaved: (newValue) => stateController.text = newValue!,
                           decoration: InputDecoration(
-                            labelText: "Filtrar pelo estado",
+                            labelText: "Filtrar pela UF",
                             border: OutlineInputBorder(),
                           ),
                         ),

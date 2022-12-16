@@ -3,6 +3,8 @@
 import 'package:addstore/controller/anuncioController.dart';
 import 'package:addstore/helper/AnuncioDetalheHelper.dart';
 import 'package:addstore/model/anuncioModel.dart';
+import 'package:addstore/pages/filtroLogadoPage.dart';
+import 'package:addstore/pages/filtroNaoLogadoPage.dart';
 import 'package:addstore/pages/menuPage.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +21,7 @@ class ExtractHomePageScreen extends StatelessWidget {
     if (args._loginStatus.toString() == "LoginStatus.signIn") {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Logado"),
+          title: Text("AppStore"),
           actions: <Widget>[
             IconButton(
                 onPressed: () {
@@ -48,7 +50,7 @@ class ExtractHomePageScreen extends StatelessWidget {
     else {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Não Logado"),
+          title: Text("AppStore"),
           actions: <Widget>[
             IconButton(
                 onPressed: () {
@@ -102,6 +104,20 @@ class HomePageBody extends StatelessWidget {
 
     return Column(
       children: [
+        SizedBox(height: 20,),
+        Center(
+          child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(
+                    context,
+                    '/filtroUnlogged',
+                  arguments: FiltroNaoLogadoPageArguments(args._loginStatus, null)
+                );
+              },
+              icon: Icon(Icons.login_rounded),
+              label: Text("Filtrar anúncios")
+          ),
+        ),
         Expanded(
           child: FutureBuilder<List<Anuncio>>(
             future: _dbAnuncioController.getAnuncios(args.state, args.category),
@@ -129,11 +145,7 @@ class HomePageBody extends StatelessWidget {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => AnuncioDetalheHelper(
-                                                    item.title,
-                                                    item.price,
-                                                    item.telephone,
-                                                    item.description)
+                                                builder: (context) => AnuncioDetalheHelper(item)
                                             )
                                         );
                                       },
@@ -183,6 +195,20 @@ class HomePageBody2 extends StatelessWidget {
 
     return Column(
       children: [
+        SizedBox(height: 20,),
+        Center(
+          child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(
+                    context,
+                    '/filtroLogged',
+                  arguments: FiltroLogadoPageArguments(args._loginStatus, args.userID)
+                );
+              },
+              icon: Icon(Icons.login_rounded),
+              label: Text("Filtrar anúncios")
+          ),
+        ),
         Expanded(
             child: FutureBuilder<List<Anuncio>>(
               future: _dbAnuncioController.getAnuncios2(args.state, args.category, args.price!, args.title!),
@@ -210,11 +236,7 @@ class HomePageBody2 extends StatelessWidget {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => AnuncioDetalheHelper(
-                                                      item.title,
-                                                      item.price,
-                                                      item.telephone,
-                                                      item.description)
+                                                  builder: (context) => AnuncioDetalheHelper(item)
                                               )
                                           );
                                         },

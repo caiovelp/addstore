@@ -126,7 +126,7 @@ class AnuncioController {
         maps = await db.query(
           TABLE_NAME,
           where: "title LIKE ?",
-          whereArgs: ['%$title'],
+          whereArgs: ['%$title%'],
         );
       }
       else if (estado.isNotEmpty && categoria.isNotEmpty && price.isEmpty && title.isEmpty) {
@@ -139,7 +139,7 @@ class AnuncioController {
       }
       else if (estado.isNotEmpty && categoria.isEmpty && price.isEmpty && title.isNotEmpty) {
         String sql = '''SELECT * FROM $TABLE_NAME WHERE state = ? AND title LIKE ?''';
-        maps = await db.rawQuery(sql, [estado, '%$title']);
+        maps = await db.rawQuery(sql, [estado, "%$title%"]);
       }
       else if (estado.isEmpty && categoria.isNotEmpty && price.isNotEmpty && title.isEmpty) {
         String sql = '''SELECT * FROM $TABLE_NAME WHERE category = ? AND price <= ?''';
@@ -147,11 +147,11 @@ class AnuncioController {
       }
       else if (estado.isEmpty && categoria.isNotEmpty && price.isEmpty && title.isNotEmpty) {
         String sql = '''SELECT * FROM $TABLE_NAME WHERE category = ? AND title LIKE ?''';
-        maps = await db.rawQuery(sql, [categoria, '%$title']);
+        maps = await db.rawQuery(sql, [categoria, '%$title%']);
       }
       else if (estado.isEmpty && categoria.isEmpty && price.isNotEmpty && title.isNotEmpty) {
         String sql = '''SELECT * FROM $TABLE_NAME WHERE price <= ? AND title LIKE ?''';
-        maps = await db.rawQuery(sql, [double.parse(price), '%$title']);
+        maps = await db.rawQuery(sql, [double.parse(price), '%$title%']);
       }
       else if (estado.isNotEmpty && categoria.isNotEmpty && price.isNotEmpty && title.isEmpty) {
         String sql = '''SELECT * FROM $TABLE_NAME WHERE state = ? AND category = ? AND price <= ?''';
@@ -159,19 +159,19 @@ class AnuncioController {
       }
       else if (estado.isNotEmpty && categoria.isNotEmpty && price.isEmpty && title.isNotEmpty) {
         String sql = '''SELECT * FROM $TABLE_NAME WHERE state = ? AND category = ? AND title LIKE ?''';
-        maps = await db.rawQuery(sql, [estado, categoria, '%$title']);
+        maps = await db.rawQuery(sql, [estado, categoria, '%$title%']);
       }
       else if (estado.isNotEmpty && categoria.isEmpty && price.isNotEmpty && title.isNotEmpty) {
         String sql = '''SELECT * FROM $TABLE_NAME WHERE state = ? AND price <= ? AND title LIKE ?''';
-        maps = await db.rawQuery(sql, [estado, double.parse(price), '%$title']);
+        maps = await db.rawQuery(sql, [estado, double.parse(price), '%$title%']);
       }
       else if (estado.isEmpty && categoria.isNotEmpty && price.isNotEmpty && title.isNotEmpty) {
         String sql = '''SELECT * FROM $TABLE_NAME WHERE category = ? AND price <= ? AND title LIKE ?''';
-        maps = await db.rawQuery(sql, [categoria, double.parse(price), '%$title']);
+        maps = await db.rawQuery(sql, [categoria, double.parse(price), '%$title%']);
       }
       else if (estado.isNotEmpty && categoria.isNotEmpty && price.isNotEmpty && title.isNotEmpty) {
         String sql = '''SELECT * FROM $TABLE_NAME WHERE state = ? AND category = ? AND price <= ? AND title LIKE ?''';
-        maps = await db.rawQuery(sql, [estado, categoria, double.parse(price), '%$title']);
+        maps = await db.rawQuery(sql, [estado, categoria, double.parse(price), '%$title%']);
       }
 
       return List.generate(

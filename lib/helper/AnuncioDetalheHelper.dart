@@ -1,22 +1,16 @@
 // import 'dart:html';
 
 import 'package:addstore/helper/anuntioTile.dart';
+import 'package:addstore/model/anuncioModel.dart';
 import 'package:addstore/model/userDataModel.dart';
 import 'package:flutter/material.dart';
 
 
 class AnuncioDetalheHelper extends StatelessWidget{
-  final String title;
-  final double price;
-  final String telephone;
-  final String description;
-  // final Blob photo;
+  final Anuncio anuncio;
 
   const AnuncioDetalheHelper(
-    this.title,
-    this.price,
-    this.telephone,
-    this.description,
+    this.anuncio
     // this.photo,
   );
 
@@ -24,10 +18,13 @@ class AnuncioDetalheHelper extends StatelessWidget{
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
     final TextStyle titleStyle = TextStyle(
       fontSize: width * 0.05,
     );
+    var title = anuncio.title;
+    var price = anuncio.price;
+    var telephone = anuncio.telephone;
+    var description = anuncio.description;
 
     return Scaffold(
       appBar: AppBar(title: Text("Detalhes"),),

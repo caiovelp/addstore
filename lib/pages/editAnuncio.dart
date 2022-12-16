@@ -2,6 +2,7 @@
 
 import 'package:addstore/controller/anuncioController.dart';
 import 'package:addstore/model/anuncioModel.dart';
+import 'package:addstore/pages/myAnuncios.dart';
 import 'package:flutter/material.dart';
 
 
@@ -144,7 +145,10 @@ class _EditAnuncioPageState extends State<EditAnuncioPage> {
                   anuncio.description = descriptionController.text;
 
                   _dbAnuncioController.update(anuncio);
-                  Navigator.pop(context);
+                  Navigator.pushNamed(
+                      context,
+                      ExtractMyAnunciosPageScreen.routeName
+                  );
                 },
                 style: style,
                 icon: Icon(Icons.add_circle),

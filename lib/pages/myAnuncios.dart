@@ -124,10 +124,8 @@ class MyAnuncioPageBody extends StatelessWidget {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) => AnuncioDetalheHelper(
-                                                          item.title,
-                                                          item.price,
-                                                          item.telephone,
-                                                          item.description)
+                                                          item
+                                                      )
                                                   )
                                               );
                                             },
